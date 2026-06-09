@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RunClub UZ — Birga yuguramiz!</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh}
+  .hidden{display:none!important}
+  .btn{padding:10px 22px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:500;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+  .btn-primary{background:#1D9E75;color:#fff}
+  .btn-primary:hover{background:#0F6E56}
+  .btn-danger{background:#E24B4A;color:#fff}
+  .btn-outline{background:transparent;border:0.5px solid #ccc;color:#1a1a18}
+  .btn-outline:hover{background:#f0f0ee}
+  .btn-sm{padding:6px 14px;font-size:13px}
+  input,select,textarea{width:100%;padding:9px 12px;border:0.5px solid #ddd;border-radius:8px;background:#fff;color:#1a1a18;font-size:14px;margin-bottom:10px;font-family:inherit}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:#1D9E75;box-shadow:0 0 0 3px rgba(29,158,117,.1)}
+  label{font-size:13px;color:#666;margin-bottom:4px;display:block}
+  .card{background:#fff;border:0.5px solid #e0e0dc;border-radius:12px;padding:1.25rem}
+  nav{background:#fff;border-bottom:0.5px solid #e0e0dc;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+  .logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:500}
+  .logo i{color:#1D9E75;font-size:22px}
+  .nav-links{display:flex;gap:8px}
+  .badge-green{background:#E1F5EE;color:#0F6E56;font-size:12px;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:4px}
+  .stat-card{background:#fff;border:0.5px solid #e0e0dc;border-radius:8px;padding:.75rem;text-align:center}
+  .stat-num{font-size:24px;font-weight:500;color:#1D9E75}
+  .stat-label{font-size:12px;color:#888;margin-top:2px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;padding:6px 8px;color:#888;font-weight:500;border-bottom:0.5px solid #eee}
+  td{padding:8px;border-bottom:0.5px solid #f0f0f0}
+  .participant-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #f0f0f0}
+  .participant-num{width:26px;height:26px;border-radius:50%;background:#E1F5EE;color:#0F6E56;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+  .winner-box{background:#E1F5EE;border-radius:8px;padding:.75rem;text-align:center;margin-top:8px}
+  @media(max-width:600px){
+    .nav-links button span{display:none}
+    .grid-2{grid-template-columns:1fr!important}
+    .grid-3{grid-template-columns:1fr 1fr!important}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <i class="ti ti-run"></i>
+    <span>RunClub UZ</span>
+  </div>
+  <div class="nav-links">
+    <button class="btn btn-outline btn-sm" onclick="showPage('home')"><i class="ti ti-home"></i> <span>Bosh sahifa</span></button>
+    <button class="btn btn-outline btn-sm" onclick="showPage('register')"><i class="ti ti-user-plus"></i> <span>Ro'yxat</span></button>
+    <button class="btn btn-primary btn-sm" onclick="showPage('admin')"><i class="ti ti-lock"></i> <span>Admin</span></button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" style="max-width:900px;margin:0 auto;padding:2rem 1rem">
+  <div style="text-align:center;padding:2rem 1rem 1.5rem">
+    <div class="badge-green" style="margin-bottom:1rem"><i class="ti ti-calendar-event"></i> Bugungi yugurish uchun ro'yxatdan o'ting</div>
+    <h1 style="font-size:28px;font-weight:500;margin-bottom:.75rem">Birga yuguramiz! 🏃</h1>
+    <p style="color:#666;font-size:15px;max-width:480px;margin:0 auto 1.5rem">Har kecha birgalikda yugurish, kichik musobaqalar va sovg'alar. Hamma qatnashishi mumkin!</p>
+    <button class="btn btn-primary" style="font-size:15px;padding:12px 32px" onclick="showPage('register')"><i class="ti ti-user-plus"></i> Bugun qatnashish</button>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;border-left:3px solid #1D9E75">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem">
+      <i class="ti ti-map-pin" style="color:#1D9E75;font-size:18px"></i>
+      <span style="font-weight:500;font-size:15px">Bugungi yugurish</span>
+      <span class="badge-green" style="margin-left:auto">Faol</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" class="grid-2">
+      <div><p style="font-size:12px;color:#888">Hudud</p><p id="ev-hudud" style="font-weight:500">Anhor bo'yi</p></div>
+      <div><p style="font-size:12px;color:#888">Masofa</p><p id="ev-km" style="font-weight:500">5 km</p></div>
+      <div><p style="font-size:12px;color:#888">Vaqt</p><p id="ev-vaqt" style="font-weight:500">19:00</p></div>
+      <div><p style="font-size:12px;color:#888">Sovg'a</p><p id="ev-sovga" style="font-weight:500;color:#1D9E75">🏆 medalь + 100 000 so'm</p></div>
+    </div>
+    <div style="margin-top:12px;padding-top:12px;border-top:0.5px solid #f0f0f0">
+      <p style="font-size:12px;color:#888">Qo'shimcha ma'lumot</p>
+      <p id="ev-izoh" style="font-size:14px">Yig'ilish joyi: Anhor ko'prigi. Qulay kiyim kiyib keling!</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem" class="grid-3">
+    <div class="stat-card"><p class="stat-num" id="stat-count">0</p><p class="stat-label">Bugungi ishtirokchilar</p></div>
+    <div class="stat-card"><p class="stat-num">12</p><p class="stat-label">Jami yugurish</p></div>
+    <div class="stat-card"><p class="stat-num">48</p><p class="stat-label">A'zolar</p></div>
+  </div>
+
+  <div class="card">
+    <p style="font-weight:500;margin-bottom:1rem"><i class="ti ti-users" style="color:#1D9E75"></i> Bugungi ishtirokchilar</p>
+    <div id="participants-list"><p style="color:#888;font-size:14px;text-align:center;padding:1.5rem 0">Hali hech kim ro'yxatdan o'tmagan</p></div>
+  </div>
+</div>
+
+<!-- REGISTER -->
+<div id="page-register" class="hidden" style="max-width:480px;margin:2rem auto;padding:0 1rem">
+  <div class="card">
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <i class="ti ti-user-plus" style="font-size:32px;color:#1D9E75"></i>
+      <h2 style="font-size:18px;font-weight:500;margin-top:.5rem">Yugurish uchun ro'yxatdan o'ting</h2>
+      <p style="font-size:13px;color:#888;margin-top:4px">Bugungi yugurish: <span id="reg-event-name">Anhor bo'yi — 5 km</span></p>
+    </div>
+    <div id="reg-success" class="hidden" style="background:#E1F5EE;border-radius:8px;padding:1rem;text-align:center;margin-bottom:1rem">
+      <i class="ti ti-circle-check" style="font-size:28px;color:#1D9E75"></i>
+      <p style="font-weight:500;margin-top:.5rem;color:#0F6E56">Muvaffaqiyatli ro'yxatdan o'tdingiz!</p>
+      <p style="font-size:13px;color:#0F6E56;margin-top:4px">Ko'rishguncha 🏃</p>
+      <button class="btn btn-outline btn-sm" style="margin-top:.75rem" onclick="showPage('home')">Bosh sahifaga qaytish</button>
+    </div>
+    <div id="reg-form">
+      <label>Ism Familiya</label>
+      <input type="text" id="r-ism" placeholder="Abdullayev Jasur">
+      <label>Telefon raqam</label>
+      <input type="tel" id="r-tel" placeholder="+998 90 123 45 67">
+      <label>Yosh</label>
+      <input type="number" id="r-yosh" placeholder="25" min="10" max="80">
+      <label>Yugurish tajribasi</label>
+      <select id="r-tajriba">
+        <option value="">Tanlang...</option>
+        <option>Yangi boshlovchi</option>
+        <option>O'rta daraja</option>
+        <option>Tajribali</option>
+      </select>
+      <button class="btn btn-primary" style="width:100%;margin-top:6px" onclick="registerUser()"><i class="ti ti-check"></i> Qatnashaman!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="page-admin" class="hidden" style="max-width:900px;margin:0 auto;padding:1.5rem 1rem">
+  <div id="admin-login" class="card" style="max-width:400px;margin:2rem auto">
+    <div style="text-align:center;margin-bottom:1.25rem">
+      <i class="ti ti-lock" style="font-size:28px;color:#1D9E75"></i>
+      <h2 style="font-size:17px;font-weight:500;margin-top:.5rem">Admin Panel</h2>
+    </div>
+    <label>Parol</label>
+    <input type="password" id="admin-pass" placeholder="Parolni kiriting" onkeydown="if(event.key==='Enter')adminLogin()">
+    <p id="login-err" class="hidden" style="color:#E24B4A;font-size:13px;margin-bottom:8px">Noto'g'ri parol. Qayta urinib ko'ring.</p>
+    <button class="btn btn-primary" style="width:100%" onclick="adminLogin()"><i class="ti ti-login"></i> Kirish</button>
+  </div>
+
+  <div id="admin-panel" class="hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+      <h2 style="font-size:18px;font-weight:500"><i class="ti ti-settings" style="color:#1D9E75"></i> Admin boshqaruv paneli</h2>
+      <button class="btn btn-outline btn-sm" onclick="adminLogout()"><i class="ti ti-logout"></i> Chiqish</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem" class="grid-2">
+      <div class="card">
+        <p style="font-weight:500;margin-bottom:1rem"><i class="ti ti-calendar-plus" style="color:#1D9E75"></i> Yugurish ma'lumotlari</p>
+        <label>Hudud / joy nomi</label>
+        <input type="text" id="a-hudud" placeholder="Masalan: Anhor bo'yi">
+        <label>Masofa (km)</label>
+        <input type="number" id="a-km" placeholder="5" min="1">
+        <label>Vaqt</label>
+        <input type="time" id="a-vaqt" value="19:00">
+        <label>Sovg'a</label>
+        <input type="text" id="a-sovga" placeholder="Medalь + 100 000 so'm">
+        <label>Qo'shimcha izoh</label>
+        <textarea id="a-izoh" rows="2" placeholder="Yig'ilish joyi, kiyim haqida..."></textarea>
+        <button class="btn btn-primary" style="width:100%" onclick="saveEvent()"><i class="ti ti-device-floppy"></i> Saqlash</button>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:1rem">
+          <p style="font-weight:500;margin-bottom:.75rem"><i class="ti ti-chart-bar" style="color:#1D9E75"></i> Statistika</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div class="stat-card"><p class="stat-num" id="a-stat-count">0</p><p class="stat-label">Ro'yxatdan o'tganlar</p></div>
+            <div class="stat-card"><p class="stat-num" id="a-stat-km">5 km</p><p class="stat-label">Masofa</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <p style="font-weight:500;margin-bottom:.75rem"><i class="ti ti-trophy" style="color:#facc15"></i> G'olibni aniqlash</p>
+          <p style="font-size:13px;color:#888;margin-bottom:.75rem">Ishtirokchilar orasidan tasodifiy g'olib tanlanadi</p>
+          <button class="btn btn-primary" style="width:100%;margin-bottom:8px" onclick="pickWinner()"><i class="ti ti-stars"></i> Tasodifiy tanlash</button>
+          <div id="winner-box" class="winner-box hidden">
+            <p style="font-size:13px;color:#0F6E56">🏆 G'olib:</p>
+            <p id="winner-name" style="font-weight:500;color:#085041;font-size:16px;margin-top:4px"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+        <p style="font-weight:500"><i class="ti ti-list" style="color:#1D9E75"></i> Ishtirokchilar ro'yxati</p>
+        <button class="btn btn-sm btn-danger" onclick="clearAll()"><i class="ti ti-trash"></i> Tozalash</button>
+      </div>
+      <div id="admin-table"><p style="color:#888;font-size:14px;text-align:center;padding:1.5rem">Hali ishtirokchi yo'q</p></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMIN_PASS = 'admin123';
+let participants = JSON.parse(localStorage.getItem('runclub_p') || '[]');
+let event = JSON.parse(localStorage.getItem('runclub_e') || 'null') || {
+  hudud:"Anhor bo'yi", km:"5", vaqt:"19:00",
+  sovga:"🏆 medalь + 100 000 so'm",
+  izoh:"Yig'ilish joyi: Anhor ko'prigi. Qulay kiyim kiyib keling!"
+};
+let isAdmin = false;
+
+function save(){
+  localStorage.setItem('runclub_p', JSON.stringify(participants));
+  localStorage.setItem('runclub_e', JSON.stringify(event));
+}
+
+function showPage(p){
+  ['home','register','admin'].forEach(x => document.getElementById('page-'+x).classList.add('hidden'));
+  document.getElementById('page-'+p).classList.remove('hidden');
+  if(p==='home') renderHome();
+  if(p==='register') renderRegForm();
+  if(p==='admin' && isAdmin) renderAdmin();
+}
+
+function renderHome(){
+  document.getElementById('ev-hudud').textContent = event.hudud;
+  document.getElementById('ev-km').textContent = event.km + ' km';
+  document.getElementById('ev-vaqt').textContent = event.vaqt;
+  document.getElementById('ev-sovga').textContent = event.sovga;
+  document.getElementById('ev-izoh').textContent = event.izoh;
+  document.getElementById('stat-count').textContent = participants.length;
+  const list = document.getElementById('participants-list');
+  if(!participants.length){
+    list.innerHTML = '<p style="color:#888;font-size:14px;text-align:center;padding:1.5rem 0">Hali hech kim ro\'yxatdan o\'tmagan</p>';
+    return;
+  }
+  list.innerHTML = participants.map((p,i) => `
+    <div class="participant-row">
+      <div class="participant-num">${i+1}</div>
+      <div>
+        <p style="font-size:14px;font-weight:500">${p.ism}</p>
+        <p style="font-size:12px;color:#888">${p.tajriba} · ${p.yosh} yosh</p>
+      </div>
+    </div>`).join('');
+}
+
+function renderRegForm(){
+  document.getElementById('reg-event-name').textContent = event.hudud + ' — ' + event.km + ' km';
+  document.getElementById('reg-success').classList.add('hidden');
+  document.getElementById('reg-form').classList.remove('hidden');
+  ['r-ism','r-tel','r-yosh','r-tajriba'].forEach(id => { document.getElementById(id).value = ''; });
+}
+
+function registerUser(){
+  const ism = document.getElementById('r-ism').value.trim();
+  const tel = document.getElementById('r-tel').value.trim();
+  const yosh = document.getElementById('r-yosh').value;
+  const tajriba = document.getElementById('r-tajriba').value;
+  if(!ism || !tel || !yosh || !tajriba){ alert('Iltimos, barcha maydonlarni to\'ldiring!'); return; }
+  participants.push({ism, tel, yosh, tajriba, vaqt: new Date().toLocaleTimeString('uz')});
+  save();
+  document.getElementById('reg-form').classList.add('hidden');
+  document.getElementById('reg-success').classList.remove('hidden');
+}
+
+function adminLogin(){
+  const p = document.getElementById('admin-pass').value;
+  if(p === ADMIN_PASS){
+    isAdmin = true;
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-panel').classList.remove('hidden');
+    document.getElementById('login-err').classList.add('hidden');
+    renderAdmin();
+  } else {
+    document.getElementById('login-err').classList.remove('hidden');
+  }
+}
+
+function adminLogout(){
+  isAdmin = false;
+  document.getElementById('admin-panel').classList.add('hidden');
+  document.getElementById('admin-login').classList.remove('hidden');
+  document.getElementById('admin-pass').value = '';
+}
+
+function renderAdmin(){
+  document.getElementById('a-hudud').value = event.hudud;
+  document.getElementById('a-km').value = event.km;
+  document.getElementById('a-vaqt').value = event.vaqt;
+  document.getElementById('a-sovga').value = event.sovga;
+  document.getElementById('a-izoh').value = event.izoh;
+  document.getElementById('a-stat-count').textContent = participants.length;
+  document.getElementById('a-stat-km').textContent = event.km + ' km';
+  renderAdminTable();
+}
+
+function saveEvent(){
+  event.hudud = document.getElementById('a-hudud').value || event.hudud;
+  event.km = document.getElementById('a-km').value || event.km;
+  event.vaqt = document.getElementById('a-vaqt').value || event.vaqt;
+  event.sovga = document.getElementById('a-sovga').value || event.sovga;
+  event.izoh = document.getElementById('a-izoh').value || event.izoh;
+  save();
+  document.getElementById('a-stat-km').textContent = event.km + ' km';
+  alert('✅ Ma\'lumotlar saqlandi!');
+}
+
+function renderAdminTable(){
+  const div = document.getElementById('admin-table');
+  if(!participants.length){
+    div.innerHTML = '<p style="color:#888;font-size:14px;text-align:center;padding:1.5rem">Hali ishtirokchi yo\'q</p>';
+    return;
+  }
+  div.innerHTML = `<div style="overflow-x:auto"><table>
+    <thead><tr>
+      <th>#</th><th>Ism Familiya</th><th>Telefon</th><th>Yosh</th><th>Tajriba</th><th>Vaqt</th><th></th>
+    </tr></thead><tbody>
+    ${participants.map((p,i) => `<tr>
+      <td>${i+1}</td>
+      <td style="font-weight:500">${p.ism}</td>
+      <td>${p.tel}</td>
+      <td>${p.yosh}</td>
+      <td>${p.tajriba}</td>
+      <td style="color:#888">${p.vaqt}</td>
+      <td><button onclick="removeP(${i})" style="background:none;border:none;cursor:pointer;color:#E24B4A;font-size:16px"><i class="ti ti-x"></i></button></td>
+    </tr>`).join('')}
+    </tbody></table></div>`;
+}
+
+function removeP(i){
+  if(confirm('Bu ishtirokchini o\'chirasizmi?')){
+    participants.splice(i,1); save(); renderAdminTable();
+    document.getElementById('a-stat-count').textContent = participants.length;
+    document.getElementById('stat-count').textContent = participants.length;
+  }
+}
+
+function clearAll(){
+  if(confirm('Barcha ishtirokchilarni o\'chirasizmi? Bu amalni qaytarib bo\'lmaydi!')){
+    participants = []; save(); renderAdmin();
+  }
+}
+
+function pickWinner(){
+  if(!participants.length){ alert('Ishtirokchilar ro\'yxati bo\'sh!'); return; }
+  const w = participants[Math.floor(Math.random() * participants.length)];
+  document.getElementById('winner-name').textContent = w.ism + ' (' + w.tel + ')';
+  document.getElementById('winner-box').classList.remove('hidden');
+}
+
+renderHome();
+</script>
+</body>
+</html>
